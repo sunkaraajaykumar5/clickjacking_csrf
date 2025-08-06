@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Colorful Animated Form</title>
+    <style>
+        body {
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            height: 100vh;
+        }
+        .form-container {
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(60, 60, 60, 0.21);
+            margin: 50px auto;
+            padding: 32px 32px 24px;
+            text-align: center;
+            animation: floatIn 1s cubic-bezier(.77,0,.18,1) 0s 1;
+        }
+        @keyframes floatIn {
+            from { transform: translateY(80px); opacity: 0; }
+            to   { transform: translateY(0); opacity: 1; }
+        }
+        h1 {
+            color: #FF5858;
+            margin-bottom: 12px;
+            font-size: 2.3rem;
+            text-shadow: 0 1px 10px #ffd6d6, 0 2px 15px #7cffcc6c;
+            animation: textPop 1.3s 0.3s backwards;
+        }
+        @keyframes textPop {
+            0% {
+                letter-spacing: -0.03em; 
+                transform: scale(0.9);
+            }
+            80% {
+                color: #FFB100;
+            }
+            100% {
+                letter-spacing: 0em;
+                transform: scale(1);
+            }
+        }
+        .group {
+            position: relative;
+            margin-bottom: 26px;
+            margin-top: 18px;
+            width: 100%;
+        }
+        input[type="text"] {
+            width: 96%;              /* Fit well inside container */
+            box-sizing: border-box;  /* Include padding and border in width */
+            padding: 12px 12px 12px 18px;
+            border: 2px solid #a5f3eb;
+            border-radius: 8px;
+            background: #fff;
+            font-size: 1.1rem;
+            transition: border 0.3s, box-shadow 0.3s;
+            outline: none;
+            box-shadow: 0 2px 10px #a5f3eb36;
+            margin: 0 auto;
+            display: block;
+        }
+        input[type="text"]:focus {
+            border: 2px solid #FF5858;
+            box-shadow: 0 4px 20px #ffbda626;
+        }
+        label.float-label {
+            position: absolute;
+            left: 20px;
+            top: 13px;
+            pointer-events: none;
+            background: #fff;
+            padding: 0 6px;
+            font-size: 1.1rem;
+            color: #a5a5a5;
+            transition: 0.3s cubic-bezier(.23,1.3,.48,.89);
+        }
+        input[type="text"]:focus + .float-label,
+        input[type="text"]:not(:placeholder-shown) + .float-label {
+            top: -18px;
+            left: 10px;
+            color: #FF5858;
+            font-size: 0.93rem;
+            font-weight: bold;
+            background: linear-gradient(90deg, #ffb100 30%, #ff5858 90%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: floatLabelBounce 0.5s;
+        }
+        @keyframes floatLabelBounce {
+            0% { transform: translateY(7px); }
+            50% { transform: translateY(-4px); }
+            100% { transform: translateY(0); }
+        }
+        .character-count {
+            font-size: 0.88rem;
+            color: #ffb100;
+            animation: fadeIn 1s 0.85s backwards;
+            margin-bottom: 10px;
+        }
+        @keyframes fadeIn { 
+            from { opacity: 0; } 
+            to { opacity: 1; } 
+        }
+        button {
+            background: linear-gradient(90deg, #FFB100, #FF5858);
+            color: #fff;
+            border: none;
+            padding: 12px 34px;
+            border-radius: 22px;
+            font-size: 1.07rem;
+            box-shadow: 0 2px 12px #ff58585c;
+            cursor: pointer;
+            letter-spacing: 0.06em;
+            transition: background 0.3s, transform 0.18s;
+        }
+        button:hover {
+            background: linear-gradient(90deg, #FF5858, #FFB100);
+            transform: scale(1.062);
+        }
+        #submissionMessage {
+            display: none;
+            margin-top: 22px;
+            font-weight: bold;
+            color: #2ecc71;
+            font-size: 1.15rem;
+            animation: fadeIn 1s forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Welcome, please fill the form!</h1>
+        <form id="userForm" autocomplete="off">
+            <div class="group">
+                <input 
+                    type="text" 
+                    id="userInput" 
+                    name="userInput" 
+                    maxlength="100" 
+                    required 
+                    placeholder=" " 
+                    autocomplete="off" 
+                />
+                <label class="float-label" for="userInput">Enter Something:</label>
+            </div>
+            <div class="character-count" id="countDisplay">0 characters</div>
+            <button type="submit">Submit</button>
+        </form>
+        <div id="submissionMessage">
+            <!-- Message appears here after submit -->
+        </div>
+    </div>
+
+    <script>
+        // Live character counter
+        const input = document.getElementById('userInput');
+        const countDisplay = document.getElementById('countDisplay');
+        input.addEventListener('input', () => {
+            countDisplay.textContent = input.value.length + " characters";
+        });
+
+        // Form submission handler to show thank you message
+        const form = document.getElementById('userForm');
+        const submissionMessage = document.getElementById('submissionMessage');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            form.style.display = 'none';
+            submissionMessage.textContent = "Thank you for submitting!";
+            submissionMessage.style.display = 'block';
+        });
+    </script>
+</body>
+</html>
